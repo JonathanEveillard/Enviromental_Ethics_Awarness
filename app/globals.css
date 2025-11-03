@@ -20,7 +20,37 @@
 }
 
 body {
-  background: var(--background);
+  /* fallback background color used globally */
+  background-color: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Utility class: apply background image only to a specific page/container
+   Usage: add `className="with-bg"` to the page's root element (e.g. app/page.tsx)
+*/
+.with-bg {
+  min-height: 100vh;
+  background-image: url('/bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  position: relative;
+}
+
+/* subtle overlay for readability placed above the image but under content */
+.with-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.18);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ensure children render above the overlay */
+.with-bg * {
+  position: relative;
+  z-index: 1;
 }
