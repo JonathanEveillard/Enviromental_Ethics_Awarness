@@ -131,7 +131,7 @@ export const Privacy = () => {
         <div className="bg-linear-to-br from-blue-50 to-white border border-blue-100 rounded-lg p-6">
           <h2 className="text-xl font-semibold mb-3">Policy</h2>
           <p className="text-gray-700 text-base leading-relaxed">
-            This Privacy Policy outlines how the Local Views on Agriculture, Sustainability and the Central Experimental Farm research project (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) collects, uses, maintains, and discloses information collected from participants (&quot;you&quot; or &quot;your&quot;). This policy applies to all data collected through interviews, surveys, field observations, and any other research activities associated with this project.
+            This Privacy Policy outlines how the Local Views on Agriculture, Sustainability and the Central Experimental Farm research project. We collects, uses, maintains, and discloses information collected from participants. This policy applies to all data collected through interviews, surveys, field observations, and any other research activities associated with this project.
           </p>
         </div>
       </section>
