@@ -1,8 +1,13 @@
-import React from 'react'
+"use client"
+import React, { useState } from 'react'
 
 const Research = () => {
+  const [showReportModal, setShowReportModal] = useState(false)
+
   return (
   <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      {/* Main content */}
+      <div>
       {/* Hero */}
       <section className="mb-8">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
@@ -12,13 +17,47 @@ const Research = () => {
             <p className="mt-3 text-base sm:text-lg text-gray-600 max-w-full md:max-w-2xl">Explore sustainable and ethical practices at the experimental farm</p>
           </div>
           <div className="mt-3 md:mt-0">
-            <button className="inline-flex items-center p-3 bg-black text-white rounded-md shadow-sm hover:brightness-95">View Full Report</button>
+            <button onClick={() => setShowReportModal(true)} className="inline-flex items-center p-3 bg-black text-white rounded-md shadow-sm hover:brightness-95">View Full Report</button>
           </div>
         </div>
       </section>
 
       {/* Main content sections */}
       <section className="space-y-8">
+        {/* Section 0: General Issue */}
+        <div className="bg-white shadow rounded-lg p-6 sm:p-8">
+          <div className="flex flex-col md:flex-row items-start gap-4">
+            <div className="shrink-0 w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
+              <span className="text-2xl">🌍</span>
+            </div>
+            <div className="flex-1">
+              <h2 className="text-2xl font-semibold mb-3">General Issue</h2>
+              <p className="text-sm text-gray-500 mb-4">The broader environmental context of global agriculture</p>
+              <div className="bg-linear-to-br from-indigo-50 to-white border border-indigo-100 rounded-lg p-4 sm:p-6">
+                <div className="max-w-full md:max-w-2xl">
+                  <h3 className="font-semibold text-lg mb-3">Agriculture&apos;s Environmental Role</h3>
+                  <p className="text-gray-700 text-base leading-relaxed">
+                    Agriculture is a key part of human civilization because it gives us food, fiber, and other important resources. But its effects on the environment are complicated, with both good and bad effects. Farming can help protect soil by using methods like crop rotation, cover cropping, and agroforestry. It also helps biodiversity in managed landscapes, like pollinator habitats and hedgerows, and it can keep open green spaces that cool down cities and make the air cleaner.
+                  </p>
+                  <p className="text-gray-700 text-base leading-relaxed mt-4">
+                    Sustainable farming methods like organic farming and precision agriculture try to use fewer chemicals, save water, and lower greenhouse gas emissions. However, industrial farming often leads to deforestation, soil degradation, and the loss of natural habitats, which lowers the number of different kinds of plants and animals. Using artificial fertilizers and pesticides can pollute water systems, which can hurt aquatic life and throw ecosystems off harmony.
+                  </p>
+                  <p className="text-gray-700 text-base leading-relaxed mt-4">
+                    Raising livestock releases methane, a strong greenhouse gas, into the air. Large farming operations can also use soil nutrients and make plants more vulnerable to pests and diseases. In general, farming has both benefits and costs to the environment, so it is becoming more and more important to use sustainable and research-based methods to keep the environment healthy in the long term.
+                  </p>
+                  <h3 className="font-semibold text-lg mb-3 mt-6">The Central Experimental Farm</h3>
+                  <p className="text-gray-700 text-base leading-relaxed">
+                    The Central Experimental Farm is a working farm and national agricultural research center in Ottawa. The Farm is home to Agriculture and Agri-Food Canada, as well as labs, research plots, and the Ottawa Research and Development Centre. Its goal is to improve agricultural science through research, experimentation, and innovative concepts.
+                  </p>
+                  <p className="text-gray-700 text-base leading-relaxed mt-4">
+                    Canadian agriculture has benefited significantly from the CEF. For example, the Canadian Prairies are now one of the world&apos;s top grain-producing regions thanks to the development of Marquis wheat, a strain that is early-maturing and resistant to frost. The Farm&apos;s researchers created flower varieties such as the Explorer series of roses and the Preston lilacs. The Farm is a public attraction with gardens, an arboretum, grain fields, and barnyard animals in addition to its scientific purpose as a National Historic Site. The site is maintained by volunteers from the Friends of the Farm group, who make sure it continues to be a center for research as well as a green area for enjoyment and education.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Section 1: Local Issue */}
         <div className="bg-white shadow rounded-lg p-6 sm:p-8">
           <div className="flex flex-col md:flex-row items-start gap-4">
@@ -192,6 +231,56 @@ const Research = () => {
           </div>
         </div>
       </section>
+      </div>
+
+      {/* Report Not Released Modal */}
+      {showReportModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            {/* Modal Header */}
+            <div className="sticky top-0 bg-gray-100 border-b border-gray-300 p-6 flex items-center justify-between">
+              <h2 className="text-2xl font-bold text-gray-900">Research Report</h2>
+              <button
+                onClick={() => setShowReportModal(false)}
+                className="text-gray-600 hover:text-gray-900 text-2xl font-bold"
+                aria-label="Close"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Modal Content - PDF-like appearance */}
+            <div className="p-8 sm:p-12 bg-white min-h-96 flex flex-col items-center justify-center">
+              <div className="text-center">
+                <div className="mb-6">
+                  <svg className="w-20 h-20 mx-auto text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <h3 className="text-3xl font-bold text-gray-900 mb-4">Report Not Available</h3>
+                <p className="text-lg text-gray-600 max-w-md">
+                  The full research report has not been released yet. Please check back later for updates.
+                </p>
+                <div className="mt-8">
+                  <p className="text-sm text-gray-500 italic">
+                    Check back soon for the complete research findings and analysis.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="bg-gray-50 border-t border-gray-300 p-6 flex justify-end">
+              <button
+                onClick={() => setShowReportModal(false)}
+                className="px-6 py-2 bg-black text-white font-semibold rounded-md hover:bg-gray-900 transition"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
