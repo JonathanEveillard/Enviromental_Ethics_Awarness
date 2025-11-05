@@ -3,6 +3,15 @@ import React, { useState } from 'react'
 
 const Research = () => {
   const [showReportModal, setShowReportModal] = useState(false)
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null)
+
+  // Gallery images - Dynamically generates pic1.jpg to pic(n).jpg
+  // Update this number to add more images
+  const totalImages = 17 // Change this number to add more pictures (pic1.jpg through pic17.jpg)
+  const galleryImages = Array.from({ length: totalImages }, (_, i) => ({
+    src: `/images/gallery/pic${i + 1}.jpg`,
+    alt: `Gallery Image ${i + 1}`
+  }))
 
   return (
   <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
@@ -198,7 +207,38 @@ const Research = () => {
                     <span className="text-amber-600">📷</span>
                     Photos &amp; Visual Documentation
                   </h3>
-                  <p className="text-gray-400 italic">Currently Not Available <br/>{/*Content to be added: photographic documentation from field visits, site images, and visual records of agricultural practices at the Central Experimental Farm*/}</p>
+                  
+                  {/* Gallery Grid - Instagram/Pinterest Style */}
+                  {galleryImages.length > 0 ? (
+                    <>
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                        {galleryImages.map((image, index) => {
+                          const colors = ['bg-blue-500', 'bg-purple-500', 'bg-pink-500', 'bg-red-500', 'bg-orange-500', 'bg-yellow-500', 'bg-green-500', 'bg-teal-500', 'bg-indigo-500', 'bg-cyan-500', 'bg-lime-500', 'bg-amber-500', 'bg-rose-500', 'bg-fuchsia-500', 'bg-violet-500', 'bg-emerald-500', 'bg-sky-500']
+                          const emojis = ['📸', '🌾', '🌱', '🌿', '🍃', '🌻', '🌺', '🌸', '🌼', '🌳', '🌲', '🌴', '🍀', '🌵', '🌷', '💐', '🌹']
+                          const bgColor = colors[index % colors.length]
+                          const emoji = emojis[index % emojis.length]
+                          
+                          return (
+                            <div
+                              key={index}
+                              className={`relative overflow-hidden rounded-lg aspect-square cursor-pointer group shadow-lg border-2 border-white ${bgColor} flex items-center justify-center transition-transform duration-300 hover:scale-110 hover:shadow-xl`}
+                              onClick={() => setSelectedImageIndex(index)}
+                            >
+                              <div className="text-6xl drop-shadow-lg">{emoji}</div>
+                            </div>
+                          )
+                        })}
+                      </div>
+                      
+                      <p className="text-sm text-gray-600 mt-4 italic">
+                        {galleryImages.length} images loaded • Click any image to view full-size
+                      </p>
+                    </>
+                  ) : (
+                    <div className="bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                      <p className="text-gray-600">No images found in gallery</p>
+                    </div>
+                  )}
                 </div>
 
                 {/* Additional Resources */}
@@ -277,6 +317,71 @@ const Research = () => {
               >
                 Close
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Image Lightbox Modal */}
+      {selectedImageIndex !== null && (
+        <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50 p-4">
+          <div className="relative max-w-4xl w-full">
+            {/* Close Button */}
+            <button
+              onClick={() => setSelectedImageIndex(null)}
+              className="absolute top-4 right-4 text-white hover:text-gray-300 text-3xl z-10"
+              aria-label="Close"
+            >
+              ✕
+            </button>
+
+            {/* Main Image */}
+            <img
+              src={galleryImages[selectedImageIndex].src}
+              alt={galleryImages[selectedImageIndex].alt}
+              className="w-full h-auto max-h-96 sm:max-h-[70vh] object-contain mx-auto rounded-lg"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%23333" width="400" height="300"/%3E%3Ctext x="50%25" y="50%25" font-size="18" fill="%23666" text-anchor="middle" dy=".3em"%3EImage not found%3C/text%3E%3C/svg%3E'
+              }}
+            />
+
+            {/* Image Counter and Navigation */}
+            <div className="flex items-center justify-between mt-4">
+              <button
+                onClick={() => setSelectedImageIndex((selectedImageIndex - 1 + galleryImages.length) % galleryImages.length)}
+                className="px-4 py-2 bg-white text-black font-semibold rounded-md hover:bg-gray-200 transition"
+              >
+                ← Prev
+              </button>
+
+              <p className="text-white font-medium">
+                {selectedImageIndex + 1} / {galleryImages.length}
+              </p>
+
+              <button
+                onClick={() => setSelectedImageIndex((selectedImageIndex + 1) % galleryImages.length)}
+                className="px-4 py-2 bg-white text-black font-semibold rounded-md hover:bg-gray-200 transition"
+              >
+                Next →
+              </button>
+            </div>
+
+            {/* Thumbnail Strip */}
+            <div className="flex gap-2 mt-4 overflow-x-auto pb-2">
+              {galleryImages.map((image, index) => (
+                <img
+                  key={index}
+                  src={image.src}
+                  alt={`Thumbnail ${index + 1}`}
+                  className={`w-16 h-16 object-cover rounded-md cursor-pointer transition-opacity ${
+                    index === selectedImageIndex ? 'opacity-100 ring-2 ring-white' : 'opacity-60 hover:opacity-100'
+                  }`}
+                  onClick={() => setSelectedImageIndex(index)}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"%3E%3Crect fill="%23333" width="64" height="64"/%3E%3C/svg%3E'
+                  }}
+                />
+              ))}
             </div>
           </div>
         </div>
